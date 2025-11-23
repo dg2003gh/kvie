@@ -14,7 +14,7 @@ It provides an intuitive visualization of namespaces, pods, logs, and node healt
 
 Interactive visual Kubernetes topology, where namespaces contain organized Pod and resource tiles arranged in a responsive grid layout.
 
-![diagram](./screenshots/diagram.png)
+![diagram](public/diagram.png)
 
 ## Requirements
 
