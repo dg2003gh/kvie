@@ -32,9 +32,10 @@ export default function Monitoring({
       switch (pod.status.phase) {
         case "Running":
           return "bg-green-200 text-green-800";
-
         case "Pending":
           return "bg-orange-200 text-orange-800";
+        case "Succeeded":
+          return "bg-blue-200 text-blue-800";
         default:
           return "bg-red-200 text-red-800";
       }
