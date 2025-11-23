@@ -26,10 +26,6 @@ Live node metrics dashboard featuring CPU and memory usage per node, captured us
 
 Real-time Kubernetes status from the terminal, showing cluster connectivity, running services and debug messages from the kvie backend.
 
-![terminal](public/terminal.png)
-
-Cluster logs preview, displaying application logs directly from Kubernetes Pods, with automatic updates and simplified viewing.
-
 ![logs](public/logs.png)
 
 ## Requirements
