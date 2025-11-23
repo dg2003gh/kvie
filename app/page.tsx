@@ -156,7 +156,7 @@ export default function Home() {
       icon: <RiHeartPulseLine />,
     },
     {
-      name: E_TABS.DIAGRAM,
+      name: E_TABS.TOPOLOGY,
       color: "text-green-300",
       icon: <RiFlowChart />,
     },
