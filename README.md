@@ -22,7 +22,7 @@ Complete cluster health overview, illustrating node conditions, capacity usage, 
 
 Live node metrics dashboard featuring CPU and memory usage per node, captured using the Kubernetes Metrics API.
 
-![monitoring-2](screenshots/monitoring-2.png)
+![terminal](screenshots/terminal.png)
 
 Real-time Kubernetes status from the terminal, showing cluster connectivity, running services and debug messages from the kvie backend.
 
