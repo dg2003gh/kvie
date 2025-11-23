@@ -1,0 +1,14 @@
+import { RiAlertLine } from "react-icons/ri";
+
+export default function Insights() {
+  return <section className="w-full h-full p-5  bg-zinc-900">
+    <h1 className="flex gap-5 items-center text-white text-2xl font-bold"><RiAlertLine />Insights</h1>
+    <div className="flex items-center justify-center w-full h-full ">
+      <p className="flex flex-col items-center justify-center text-white text-2xl font-bold ">
+        <RiAlertLine className="text-7xl mb-10" />
+        Your cluster Insights will be shown here.
+      </p>
+    </div>
+  </section>
+}
+
