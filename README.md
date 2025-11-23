@@ -14,7 +14,7 @@ It provides an intuitive visualization of namespaces, pods, logs, and node healt
 
 Interactive visual Kubernetes topology, where namespaces contain organized Pod and resource tiles arranged in a responsive grid layout.
 
-![diagram](public/diagram.png)
+![diagram](public/d.png)
 
 Complete cluster health overview, illustrating node conditions, capacity usage, and workload visibility across the Kubernetes environment.
 
