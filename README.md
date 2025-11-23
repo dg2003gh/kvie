@@ -14,23 +14,23 @@ It provides an intuitive visualization of namespaces, pods, logs, and node healt
 
 Interactive visual Kubernetes topology, where namespaces contain organized Pod and resource tiles arranged in a responsive grid layout.
 
-![diagram](./screenshots/diagram.png)
+![diagram](screenshots/diagram.png)
 
 Complete cluster health overview, illustrating node conditions, capacity usage, and workload visibility across the Kubernetes environment.
 
-![monitoring](./screenshots/monitoring.png)
+![monitoring](screenshots/monitoring.png)
 
 Live node metrics dashboard featuring CPU and memory usage per node, captured using the Kubernetes Metrics API.
 
-![monitoring-2](./screenshots/monitoring-2.png)
+![monitoring-2](screenshots/monitoring-2.png)
 
 Real-time Kubernetes status from the terminal, showing cluster connectivity, running services and debug messages from the kvie backend.
 
-![terminal](./screenshots/terminal.png)
+![terminal](screenshots/terminal.png)
 
 Cluster logs preview, displaying application logs directly from Kubernetes Pods, with automatic updates and simplified viewing.
 
-![logs](./screenshots/logs.png)
+![logs](screenshots/logs.png)
 
 ## Requirements
 
