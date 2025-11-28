@@ -1,4 +1,4 @@
-import { Pod, Node } from "@/app/page";
+import { Pod, Node } from "@/app/types";
 import { formatKibToGib } from "@/app/utils";
 import { RiHeartPulseLine, RiServerLine } from "react-icons/ri";
 import { SiKubernetes } from "react-icons/si";

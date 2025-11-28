@@ -17,104 +17,7 @@ import Notifications from "./components/Notifications/Notifications";
 import Insights from "./components/Insights/Insights";
 import Settings from "./components/Settings/Settings";
 import Logs from "./components/Logs/Logs";
-
-export interface Node {
-  metadata: { name: string };
-  status: {
-    capacity: {
-      cpu: number;
-      memory: string;
-      pods: number;
-      "ephemeral-storage": string;
-    };
-    conditions: { type: string; status: string }[];
-  };
-}
-
-export interface ContainerStatus {
-  name: string;
-  ready: boolean;
-  restartCount: number;
-  state: {
-    running?: { startedAt: string };
-    waiting?: { reason: string; message?: string };
-    terminated?: { exitCode: number; reason: string; finishedAt: string };
-  };
-}
-
-export interface PodCondition {
-  type: string; // Ready, Initialized, PodScheduled...
-  status: string; // True, False, Unknown
-  reason?: string;
-  message?: string;
-}
-
-export interface Pod {
-  metadata: {
-    name: string;
-    namespace: string;
-    uid: string;
-    creationTimestamp: string;
-    labels?: Record<string, string>;
-    annotations?: Record<string, string>;
-  };
-
-  spec: {
-    nodeName?: string;
-    qosClass?: string;
-    containers: Array<Container>;
-  };
-
-  status: {
-    phase: string;
-    podIP?: string;
-    hostIP?: string;
-    containerStatuses?: Array<ContainerStatus>;
-    conditions?: Array<PodCondition>;
-  };
-}
-
-export interface Container {
-  name: string;
-  image: string;
-  resources?: {
-    requests?: {
-      cpu?: string;
-      memory?: string;
-    };
-    limits?: {
-      cpu?: string;
-      memory?: string;
-    };
-  };
-}
-
-export interface Namespace {
-  metadata: {
-    name: string;
-    namespace: string;
-    uid: string;
-  };
-  status: { phase: string };
-}
-
-export interface Secret {
-  metadata: {
-    name: string;
-    namespace: string;
-    uid: string;
-  };
-  status: { phase: string };
-}
-
-export interface Configmap {
-  metadata: {
-    name: string;
-    namespace: string;
-    uid: string;
-  };
-  status: { phase: string };
-}
+import { Pod, Node, Namespace, Configmap, Secret } from "./types";
 
 export default function Home() {
   const [pods, setPods] = useState<Pod[]>([]);
@@ -122,9 +25,12 @@ export default function Home() {
   const [namespaces, setNamespaces] = useState<Namespace[]>([]);
   const [secrets, setSecrets] = useState<Secret[]>([]);
   const [configmaps, setConfigmap] = useState<Configmap[]>([]);
-  const [activeTab, setActiveTab] = useState<string>(
-    localStorage.getItem(STORAGE_TAB_KEY) || E_TABS.DIAGRAM,
-  );
+  const [activeTab, setActiveTab] = useState<string>(E_TABS.TOPOLOGY);
+
+  useEffect(() => {
+    const cachedTab = localStorage.getItem(STORAGE_TAB_KEY);
+    if (cachedTab) setActiveTab(cachedTab);
+  }, []);
 
   useEffect(() => {
     fetch(`${PROXY_HOST}/api/v1/pods`)
@@ -184,7 +90,7 @@ export default function Home() {
 
   const tab = () => {
     switch (activeTab) {
-      case E_TABS.DIAGRAM:
+      case E_TABS.TOPOLOGY:
       default:
         return (
           <PodMindMap

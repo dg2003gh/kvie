@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "kvie-chart.fullname" . }}-test-connection"
+  labels:
+    {{- include "kvie-chart.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget-frontend
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "kvie-chart.fullname" . }}:{{ .Values.frontend.service.port }}']
+    - name: wget-backend
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "kvie-chart.fullname" . }}:{{ .Values.backend.service.port }}']
+  restartPolicy: Never

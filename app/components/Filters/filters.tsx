@@ -1,7 +1,7 @@
 import { Dispatch, ReactElement, SetStateAction, useState } from "react";
 import { RiBox1Line, RiSearch2Line } from "react-icons/ri";
 import Dropdown from "../DropDown/DropDown";
-import { Pod, Container } from "@/app/page";
+import { Pod, Container } from "@/app/types";
 
 export interface Selects {
   name: string;
@@ -26,7 +26,7 @@ export default function Filters({
 
   const createSelect = selects.map((select, key) => {
     return (
-      <Dropdown icon={select.icon} key={key} defaultValue={""}>
+      <Dropdown icon={select.icon} key={key} defaultValueId={""}>
         {select.options.map((opt: any, key: number) =>
           select.checkbox ? (
             <label key={key} className="flex gap-2">
@@ -84,7 +84,7 @@ export default function Filters({
           {selectedPod?.spec &&
           selectedPod?.spec.containers.length &&
           selectedPod.spec.containers.length > 1 ? (
-            <Dropdown icon={<RiBox1Line />} defaultValue={""}>
+            <Dropdown icon={<RiBox1Line />} defaultValueId={""}>
               <button
                 onClick={() => selects[0].call && selects[0].call(selectedPod)}
                 className="w-full h-full"

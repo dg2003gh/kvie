@@ -9,6 +9,9 @@ import (
 	"net/http"
 	"strings"
 	"time"
+	"os"
+	"crypto/tls"
+	"crypto/x509"
 
 	"finituz.com/k8s_viewer/internal/db"
 	"finituz.com/k8s_viewer/internal/k8s"
@@ -20,6 +23,35 @@ type HealthResponse struct {
 	StatusCode int    `json:"statusCode"`
 	Message    string `json:"message"`
 }
+
+var kube_token = func() string {
+	data, err := os.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/token")
+	if err != nil {
+		log.Fatalf("❌ Cannot read Kubernetes token: %v", err)
+	}
+	return strings.TrimSpace(string(data))
+}()
+
+var kube_client = func() *http.Client {
+	caCert, err := os.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/ca.crt")
+	if err != nil {
+		log.Fatalf("❌ Cannot read Kubernetes CA: %v", err)
+	}
+
+	caPool := x509.NewCertPool()
+	caPool.AppendCertsFromPEM(caCert)
+
+	tlsConfig := &tls.Config{
+		RootCAs: caPool,
+	}
+
+	transport := &http.Transport{
+		TLSClientConfig: tlsConfig,
+	}
+
+	return &http.Client{Transport: transport}
+}()
+
 
 func proxyHandler(base_url string, proxy_path string) http.HandlerFunc {
 	log.Println("✅ Proxy path set", proxy_path)
@@ -40,7 +72,9 @@ func proxyHandler(base_url string, proxy_path string) http.HandlerFunc {
 		req, _ := http.NewRequest(r.Method, url, r.Body)
 		req.Header = r.Header
 
-		resp, err := http.DefaultClient.Do(req)
+		req.Header.Set("Authorization", "Bearer "+kube_token)
+
+		resp, err := kube_client.Do(req)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadGateway)
 			return
@@ -183,7 +217,7 @@ func healthByPodHandler(_db *sql.DB) http.HandlerFunc {
 func main() {
 	DB_PORT := ":8080"
 	versioning := "/proxy/v1/"
-	BASE_URL := "http://localhost:8081"
+	BASE_URL := "https://kubernetes.default.svc"
 
 	database, err := db.OpenSqliteConn("./k8s.db")
 	if err != nil {

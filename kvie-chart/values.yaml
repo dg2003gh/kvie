@@ -1,0 +1,94 @@
+replicaCount: 1
+hostNetwork: true
+
+frontend:
+  repository: webapp
+  pullPolicy: IfNotPresent
+  tag: "latest"
+  service:
+    enabled: true
+    type: ClusterIP
+    port: 3000
+  serviceAccount:
+    create: true
+    automount: true
+    annotations: {}
+    name: ""
+  secrets:
+    NEXT_PUBLIC_BACKEND_URL: "http://backend:8080/proxy/v1"
+  podAnnotations: {}
+  podLabels: {}
+  podSecurityContext: {}
+  securityContext: {}
+
+backend:
+  repository: server
+  pullPolicy: IfNotPresent
+  tag: "latest"
+  service:
+    enabled: false
+    type: ClusterIP
+    port: 8080
+  serviceAccount:
+    create: true
+    automount: true
+    annotations: {}
+    name: ""
+  podAnnotations: {}
+  podLabels: {}
+  podSecurityContext: {}
+  securityContext: {}
+
+ingress:
+  enabled: true
+  className: ""
+  annotations: {}
+  hosts:
+    - host: kvie.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs:
+    - name: gateway
+      sectionName: http
+  hostnames:
+    - chart-example.local
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /headers
+
+resources: {}
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+serviceAccount:
+  create: true
+  name: "kvie"
+
+volumes: []
+volumeMounts: []
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

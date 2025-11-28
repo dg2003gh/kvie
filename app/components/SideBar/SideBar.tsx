@@ -1,5 +1,5 @@
 import { STORAGE_TAB_KEY } from "@/app/config";
-import { Node } from "@/app/page";
+import { Node } from "@/app/types";
 import Image from "next/image";
 import { Dispatch, ReactElement, SetStateAction, useState } from "react";
 import { RiServerFill, RiTerminalBoxLine } from "react-icons/ri";

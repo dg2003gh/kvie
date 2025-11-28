@@ -12,7 +12,13 @@ import {
   Background,
   Position,
 } from "@xyflow/react";
-import { Configmap, Namespace, Pod, Secret, Node as k8sNode } from "@/app/page";
+import {
+  Configmap,
+  Namespace,
+  Pod,
+  Secret,
+  Node as k8sNode,
+} from "@/app/types";
 import nodeTypes from "../NodeTypes";
 
 export default function PodsChart({

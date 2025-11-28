@@ -1,5 +1,5 @@
 import { PROXY_HOST } from "@/app/config";
-import { Pod } from "@/app/page";
+import { Pod } from "@/app/types";
 import { useEffect, useRef, useState } from "react";
 import {
   RiBox1Line,
@@ -83,7 +83,7 @@ export default function Logs({ pods }: { pods: Array<Pod> }) {
     if (log == "chooseContainer") return multipleContainersLog;
     else if (!log && period == "any") return noLog;
     else if (period != "any" && !log) return waitingLog;
-    else if (log) return <Highlight text={log} search={search} />;
+    else if (log) return <Highlight text={log} />;
   };
 
   const selects: Array<Selects> = [
